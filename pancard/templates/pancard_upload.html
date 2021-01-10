@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR</title>
+    <style>
+        * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      padding: 42vh 32px;
+      font-size: 14px;
+      background: #eee;
+      text-align: center;
+    }
+    
+    .file-input {
+      display: inline-block;
+      text-align: left;
+      background: #fff;
+      padding: 16px;
+      width: 450px;
+      position: relative;
+      border-radius: 3px;
+    }
+    
+    .file-input > [type='file'] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      z-index: 10;
+      cursor: pointer;
+    }
+    
+    .file-input > .button {
+      display: inline-block;
+      cursor: pointer;
+      background: #eee;
+      padding: 8px 16px;
+      border-radius: 2px;
+      margin-right: 8px;
+    }
+    
+    .file-input:hover > .button {
+      background: dodgerblue;
+      color: white;
+    }
+    
+    .file-input > .label {
+      color: #333;
+      white-space: nowrap;
+      opacity: .3;
+    }
+    
+    .file-input.-chosen > .label {
+      opacity: 1;
+    }
+    .wrap {
+        margin: 10px;
+      /* height: 100%; */
+      /* display: flex; */
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .submit {
+      width: 140px;
+      height: 45px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      font-weight: 500;
+      color: #000;
+      background-color: #8cbff1;
+      border: none;
+      border-radius: 45px;
+      box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease 0s;
+      cursor: pointer;
+      outline: none;
+      }
+    
+    .submit:hover {
+      background-color: rgb(6, 112, 218);
+      box-shadow: 0px 15px 20px rgb(2, 96, 190);
+      color: #fff;
+      transform: translateY(-7px);
+    }
+    </style>
+</head>
+<body>    
+    <form action="/pancard/" 
+            method="post" 
+            enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <h2 style="color:#0670da">Please upload your Pancard</h2><h5>File size max 2MB</h5>
+        <div class='file-input'>
+            <input id="pancard" name="file" type='file' accept=".png,.jpg, .jpeg" / required>
+            <span class='button'>Choose</span>
+            <span class='label' data-js-label>No file selected</label>
+            
+        </div>
+        <div class="wrap">
+            <button type="submit" id="submitform" class="submit" disabled>Submit</button>
+        </div>
+        
+          
+        
+      </form>
+    
+    
+      <script>
+          
+    
+    var inputs = document.querySelectorAll('.file-input')
+    
+    for (var i = 0, len = inputs.length; i < len; i++) {
+      customInput(inputs[i])
+    }
+    
+    function customInput (el) {
+      const fileInput = el.querySelector('[type="file"]')
+      const label = el.querySelector('[data-js-label]')
+      
+      fileInput.onchange =
+      fileInput.onmouseout = function () {
+        if (!fileInput.value) return
+        
+        var value = fileInput.value.replace(/^.*[\\\/]/, '')
+        el.className += ' -chosen'
+        label.innerText = value
+      }
+    }
+
+    document.getElementById("pancard").addEventListener("change", function showFileSize() {
+    // (Can't use `typeof FileReader === "function"` because apparently it
+    // comes back as "object" on some browsers. So just see if it's there
+    // at all.)
+    if (!window.FileReader) { // This is VERY unlikely, browser support is near-universal
+        console.log("The file API isn't supported on this browser yet.");
+        return;
+    }
+
+    var input = document.getElementById('pancard');
+    if (!input.files) { // This is VERY unlikely, browser support is near-universal
+        console.error("This browser doesn't seem to support the `files` property of file inputs.");
+    } else if (!input.files[0]) {
+        console.log("Please select a file before clicking 'Load'");
+        document.getElementById("submitform").disabled = true;
+    } else {
+        var file = input.files[0];
+        console.log("File " + file.name + " is " + file.size + " bytes in size");
+        if(file.size > 200000){
+            document.getElementById("submitform").disabled = true;
+            alert("File size is greater max size allowed is 2MB")
+        }else{
+            document.getElementById("submitform").disabled = false;
+        }
+
+        
+    }
+});
+      </script>
+    
+</body>
+</html>

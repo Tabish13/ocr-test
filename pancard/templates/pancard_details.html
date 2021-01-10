@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR</title>
+    <style>
+        
+        #wrappedcenter{
+            width: 50%;
+            margin: auto 30%;
+        }
+        .button {
+          background-color: #8cbff1; 
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          font-size: 16px;
+          
+          cursor: pointer;
+          -webkit-transition-duration: 0.4s; /* Safari */
+          transition-duration: 0.4s;
+          
+          border-radius: 45px;
+        }
+        
+        .button1 {
+          box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        }
+        
+        .button1:hover {
+            box-shadow: 0px 15px 20px rgb(2, 96, 190);
+            color: #fff;
+            transform: translateY(-7px);
+            background-color: #0f80f0; 
+        }
+       
+        </style>
+</head>
+<body>
+
+    <div id="wrappedcenter">
+    <h2>All fetched details from image:</h2>
+    <table>
+        {% for details in results %}
+        {% if details %}
+          <tr>
+            <td>{{details}}</td>
+          </tr>
+        {% endif%}
+        {% endfor %}
+    </table>
+    <form action="/pancard/">
+        <div class="btndiv">
+            <button class="button button1" type="submit">Refresh</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
