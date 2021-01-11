@@ -10,4 +10,4 @@ docker-compose up
 ```
 Can add you .env file or else the django secret key will be set to default in setting.py.
 
-> visit http://localhost:8000/pancard/ to upload a pancard
+> visit https://thawing-beach-69423.herokuapp.com/pancard/ to upload a pancard
