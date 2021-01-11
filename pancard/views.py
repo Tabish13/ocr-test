@@ -24,7 +24,6 @@ class PancardActions(View):
         To process the uploaded pamcard using tessaract
         """
         data = handle_uploaded_file(request.FILES['file'])
-        print(data)
         if data:
             return render(request, "pancard_details.html", {
                 "results": data
