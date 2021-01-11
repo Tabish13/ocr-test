@@ -100,7 +100,7 @@
             enctype="multipart/form-data">
         {% csrf_token %}
 
-        <h2 style="color:#0670da">Please upload your Pancard</h2><h5>File size max 2MB</h5>
+        <h2 style="color:#0670da">Please upload your Pancard</h2><h5>File size max 200Kb</h5>
         <div class='file-input'>
             <input id="pancard" name="file" type='file' accept=".png,.jpg, .jpeg" / required>
             <span class='button'>Choose</span>
@@ -159,7 +159,7 @@
         console.log("File " + file.name + " is " + file.size + " bytes in size");
         if(file.size > 200000){
             document.getElementById("submitform").disabled = true;
-            alert("File size is greater max size allowed is 2MB")
+            alert("File size is greater max size allowed is 200KB")
         }else{
             document.getElementById("submitform").disabled = false;
         }
